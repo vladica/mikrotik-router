@@ -48,6 +48,27 @@ ssh admin@<ip-routera>
 :set lteRestartCount 0
 ```
 
+## Cell lock (ručno, kada si na lokaciji)
+
+```
+# Provera trenutne ćelije (earfcn, phy-cellid, signal)
+/interface lte info lte1 once
+
+# Zaključavanje na ćeliju - upiši trenutni phy-cellid
+/interface lte at-chat lte1 input="AT+GTCELLLOCK=1,0,0,1795,<phy-cellid>"
+
+# Primer: phy-cellid=327
+/interface lte at-chat lte1 input="AT+GTCELLLOCK=1,0,0,1795,327"
+
+# Uklanjanje locka
+/interface lte at-chat lte1 input="AT+GTCELLLOCK=0,0,0,0,0"
+
+# Provera stanja locka
+/interface lte at-chat lte1 input="AT+GTCELLLOCK?"
+```
+
+Napomena: EARFCN 1795 = B3@20MHz (dobra ćelija). EARFCN 1651 = B3@10MHz (loša ćelija, izbegavati).
+
 ## Fajlovi na routeru
 
 ```
